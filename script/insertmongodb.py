@@ -8,7 +8,7 @@ class TrafficDataHandler:
         self.collection = self.db['collection_velibe']
     
     def get_traffic_data(self):
-        url = "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-disponibilite-en-temps-reel/records?limit=20"
+        url = "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-disponibilite-en-temps-reel/records?limit=-1"
         
         try:
             response = requests.get(url)
