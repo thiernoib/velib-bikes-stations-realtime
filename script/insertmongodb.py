@@ -4,8 +4,8 @@ from pymongo import MongoClient
 class TrafficDataHandler:
     def __init__(self):
         self.client = MongoClient('mongodb://localhost:27017/')
-        self.db = self.client['velibe']
-        self.collection = self.db['collection_velibe']
+        self.db = self.client['database_velib']
+        self.collection = self.db['stations_velib']
     
     def get_traffic_data(self):
         url = "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-disponibilite-en-temps-reel/records?limit=-1"
