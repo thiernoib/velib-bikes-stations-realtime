@@ -20,6 +20,8 @@ st.title("🚲 Tableau de bord Vélib’ Ile de France — Données en temps ré
 # -------------------------------
 REFRESH_INTERVAL = 300  # secondes (5 minutes)
 st.sidebar.info(f"🔄 Les données se mettent à jour automatiquement toutes les {REFRESH_INTERVAL//60} minutes.")
+
+# Bouton de rafraîchissement dans la sidebar
 refresh_button = st.sidebar.button("Rafraîchir maintenant")
 
 # -------------------------------
@@ -43,14 +45,14 @@ def load_data():
     update_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     return df, update_time
 
-# Forcer le rechargement si l'utilisateur clique sur le bouton
+# -------------------------------
+# Chargement des données avec refresh
+# -------------------------------
 if refresh_button:
-    st.cache_data.clear()
-
-# -------------------------------
-# Chargement des données
-# -------------------------------
-df, update_time = load_data()
+    st.cache_data.clear()          # vide le cache
+    df, update_time = load_data()  # recharge immédiatement les données
+else:
+    df, update_time = load_data()  # chargement normal
 
 if df.empty:
     st.error("❌ Aucune donnée trouvée dans la base MongoDB.")
