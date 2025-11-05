@@ -1,3 +1,5 @@
 mon_env/
 .vscode/
 .env.DS_Store
+update_log.txt
+nohup.out
