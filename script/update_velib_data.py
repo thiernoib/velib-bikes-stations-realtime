@@ -6,10 +6,11 @@ import traceback
 
 class TrafficDataHandler:
     def __init__(self):
-        self.client = MongoClient('mongodb://localhost:27017/')
+        #self.client = MongoClient('mongodb://localhost:27017/')
+        self.client = MongoClient('mongodb://mongodb:27017/')
         self.db = self.client['database_velib']
         self.collection = self.db['stations_velib']
-        self.log_file = "update_log.txt"
+        self.log_file = "script/update_log.txt"
 
     def log(self, message):
         """Enregistre un message avec l’heure dans un fichier log."""

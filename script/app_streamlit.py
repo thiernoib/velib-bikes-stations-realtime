@@ -27,7 +27,8 @@ refresh_button = st.sidebar.button("Rafraîchir maintenant")
 # -------------------------------
 # Connexion MongoDB
 # -------------------------------
-MONGO_URI = "mongodb://localhost:27017/"
+# MONGO_URI = "mongodb://localhost:27017/"
+MONGO_URI = "mongodb://mongodb:27017/"
 DB_NAME = "database_velib"
 COLLECTION_NAME = "stations_velib"
 
