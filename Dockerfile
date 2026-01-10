@@ -1,58 +1,40 @@
-# =========================
-# Image de base Python
-# =========================
-FROM python:3.12-slim
+FROM python:3.10-slim
 
-# =========================
-# Installer dépendances système et timezone
-# =========================
+ENV AIRFLOW_HOME=/opt/airflow
+ENV TZ=Europe/Paris
+
 RUN apt-get update && apt-get install -y \
-        bash \
-        curl \
-        gcc \
-        libpq-dev \
-        build-essential \
-        tzdata \
+    bash \
+    curl \
+    gcc \
+    libpq-dev \
+    build-essential \
+    tzdata \
     && ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime \
     && dpkg-reconfigure -f noninteractive tzdata \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# =========================
-# Répertoire de travail
-# =========================
-WORKDIR /app
+WORKDIR $AIRFLOW_HOME
 
-# =========================
-# Copier requirements si existant
-# =========================
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# =========================
-# Installer Airflow + dépendances
-# =========================
+# Installer Airflow et dépendances compatibles
 RUN pip install --no-cache-dir \
-        apache-airflow==2.9.0 \
-        pymongo \
-        pandas \
-        requests \
-        matplotlib \
-        psycopg2-binary \
-        streamlit
+    apache-airflow==2.9.0 \
+    psycopg2-binary \
+    pymongo \
+    pandas \
+    requests \
+    matplotlib \
+    streamlit
 
-# =========================
-# Copier projet
-# =========================
-COPY . .
+# Créer les dossiers Airflow
+RUN mkdir -p dags logs plugins data script
 
-# =========================
-# Exposer ports
-# =========================
+COPY airflow/dags dags
+COPY airflow/logs logs
+COPY script script
+COPY data data
+
 EXPOSE 8080 8501
 
-# =========================
-# Commande par défaut
-# =========================
-# Override via docker-compose pour webserver, scheduler ou streamlit
 CMD ["bash"]
