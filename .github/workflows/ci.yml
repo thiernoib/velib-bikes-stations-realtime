@@ -29,6 +29,11 @@ jobs:
       run: |
         pytest || echo "No tests found"
 
-    - name: Build Docker images
+    # 🔥 FIX CI AIRFLOW
+    - name: Create required directories
+      run: |
+        mkdir -p logs dags plugins airflow/logs
+
+    - name: Build Docker image
       run: |
         docker build -t velib-test .
